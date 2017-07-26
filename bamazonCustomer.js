@@ -54,8 +54,9 @@ function initialize() {
                         "SELECT * FROM products WHERE id = ?;", choice.option, function (error, productReturned) {
                             if (error) {
                                 console.error(error);
-                            } else if (choice.amount < productReturned[0].stock_quantity) {
+                            } else if (productReturned[0].stock_quantity < choice.amount) {
                                 console.log("Insufficient Quantity. Select another item.")
+                                connection.end();
                             } else {
                                 var cost = productReturned[0].price * choice.amount;
                                 connection.query(
